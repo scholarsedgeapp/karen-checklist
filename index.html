@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karen's Daily Checklist</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Checklist">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#F2EDE2; --paper:#fff; --ink:#2a1f14; --muted:#8a7a6e;
+    --accent:#C47A5C; --accent-light:#F5E4DC;
+    --green:#A7B59C; --green-light:#EEF1EA;
+    --warm:#E4DCC9; --warm2:#F7F3EA;
+    --gold:#c49a2d;
+    --header-bg:#8B6A5B;
+    --sleep-bg:#E4EBF1; --sleep-text:#4A6178;
+    --family-bg:#F7E6E3; --family-text:#A8564C;
+    --ops-bg:#EFEAE0; --ops-text:#5A6350;
+    --check-done:#EEF1EA; --text-done:#AABBA0;
+    --shadow:0 2px 16px rgba(42,31,20,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);font-family:'Nunito',sans-serif;color:var(--ink);min-height:100vh;padding:0 0 80px;}
+  .top-header{background:var(--header-bg);padding:28px 24px 24px;text-align:center;position:relative;overflow:hidden;}
+  .top-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(196,122,92,0.18) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(196,154,45,0.12) 0%,transparent 60%);}
+  .top-header .greeting{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.4rem);color:#fff;position:relative;margin-bottom:6px;}
+  .top-header .greeting em{font-style:italic;color:#f0c090;}
+  .top-header .sub{font-size:0.78rem;color:rgba(255,255,255,0.65);position:relative;letter-spacing:0.04em;}
+  .sync-badge{position:fixed;top:10px;right:10px;z-index:50;font-size:0.6rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 10px;border-radius:20px;background:rgba(255,255,255,0.15);color:#fff;transition:all .3s;backdrop-filter:blur(4px);}
+  .sync-badge.saving{background:#c49a2d;color:#fff;}
+  .sync-badge.saved{background:#A7B59C;color:#2a1f14;}
+  .sync-badge.error{background:#b23030;color:#fff;}
+  .sync-badge.offline{background:rgba(120,110,100,0.6);color:#fff;}
+  .day-selector{display:flex;gap:0;background:var(--warm2);border-bottom:2px solid var(--warm);overflow-x:auto;scrollbar-width:none;}
+  .day-selector::-webkit-scrollbar{display:none;}
+  .day-btn{flex:1;min-width:70px;padding:14px 8px 12px;border:none;background:transparent;cursor:pointer;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;position:relative;}
+  .day-btn .day-name{display:block;margin-bottom:3px;}
+  .day-btn .day-progress{display:block;font-size:0.58rem;font-weight:600;color:var(--muted);letter-spacing:0;}
+  .day-btn:hover{color:var(--accent);background:var(--accent-light);}
+  .day-btn.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--paper);}
+  .content{max-width:680px;margin:0 auto;padding:24px 16px;}
+  .progress-section{background:var(--paper);border-radius:14px;padding:18px 20px;margin-bottom:20px;box-shadow:var(--shadow);border:1px solid var(--warm);}
+  .progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .progress-label{font-size:0.72rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+  .progress-count{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--accent);}
+  .progress-bar-wrap{background:var(--warm);border-radius:8px;height:8px;overflow:hidden;}
+  .progress-bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width 0.5s cubic-bezier(0.4,0,0.2,1);width:0%;}
+  .encouragement{font-size:0.72rem;color:#6b8060;margin-top:8px;font-weight:600;min-height:18px;}
+  .section-group{margin-bottom:20px;}
+  .section-title{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .section-title .s-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;}
+  .section-title .s-label{font-size:0.65rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;}
+  .section-title .s-time{font-size:0.65rem;color:var(--muted);font-weight:600;margin-left:auto;}
+  .s-sleep .s-icon{background:var(--sleep-bg);}.s-sleep .s-label{color:var(--sleep-text);}
+  .s-health .s-icon{background:var(--green-light);}.s-health .s-label{color:#5C7A54;}
+  .s-drive .s-icon{background:var(--accent-light);}.s-drive .s-label{color:#A0552F;}
+  .s-deepwork .s-icon{background:var(--sleep-bg);}.s-deepwork .s-label{color:#4A5F78;}
+  .s-ops .s-icon{background:var(--ops-bg);}.s-ops .s-label{color:var(--ops-text);}
+  .s-admin .s-icon{background:#EDEAF2;}.s-admin .s-label{color:#6B5C8B;}
+  .s-coaching .s-icon{background:#FBF0DD;}.s-coaching .s-label{color:#92500a;}
+  .s-family .s-icon{background:var(--family-bg);}.s-family .s-label{color:var(--family-text);}
+  .s-shutdown .s-icon{background:var(--warm2);}.s-shutdown .s-label{color:#5a4a3a;}
+  .checklist{background:var(--paper);border-radius:12px;border:1px solid var(--warm);overflow:hidden;box-shadow:var(--shadow);}
+  .check-item{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid var(--warm2);cursor:pointer;transition:background 0.15s;user-select:none;}
+  .check-item:last-child{border-bottom:none;}
+  .check-item:hover{background:var(--warm2);}
+  .check-item.done{background:var(--check-done);}
+  .checkbox{width:20px;height:20px;border-radius:6px;border:2px solid var(--warm);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:var(--paper);}
+  .check-item.done .checkbox{background:var(--green);border-color:var(--green);}
+  .checkbox-check{color:#fff;font-size:0.7rem;font-weight:900;opacity:0;transform:scale(0);transition:all 0.2s cubic-bezier(0.175,0.885,0.32,1.275);}
+  .check-item.done .checkbox-check{opacity:1;transform:scale(1);}
+  .check-content{flex:1;}
+  .check-time{font-size:0.6rem;font-weight:700;color:var(--accent);letter-spacing:0.08em;display:block;margin-bottom:2px;}
+  .check-title{font-size:0.76rem;font-weight:600;line-height:1.4;}
+  .check-item.done .check-title{color:var(--text-done);text-decoration:line-through;text-decoration-color:var(--text-done);}
+  .check-note{font-size:0.63rem;color:var(--muted);line-height:1.45;margin-top:3px;}
+  .check-item.done .check-note{color:#BFC7B5;}
+  .check-tag{display:inline-block;font-size:0.55rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;border-radius:4px;margin-right:5px;margin-bottom:3px;vertical-align:middle;}
+  .tag-biz1{background:var(--accent-light);color:#A0552F;}.tag-biz2{background:#DCE7DE;color:#3F6B4E;}
+  .tag-health{background:var(--green-light);color:#5C7A54;}.tag-family{background:var(--family-bg);color:var(--family-text);}
+  .tag-ops{background:var(--ops-bg);color:var(--ops-text);}
+  .celebration{display:none;background:linear-gradient(135deg,#fdf8e8,#fef3e2);border:2px solid var(--gold);border-radius:14px;padding:20px 22px;text-align:center;margin-top:20px;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+  .celebration.show{display:block;}
+  .celebration .cel-emoji{font-size:2rem;margin-bottom:8px;}
+  .celebration .cel-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);margin-bottom:6px;}
+  .celebration .cel-note{font-size:0.75rem;color:#7a5c10;line-height:1.6;}
+  .reset-btn{display:block;margin:20px auto 0;background:transparent;border:1px solid var(--warm);border-radius:8px;padding:8px 20px;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;letter-spacing:0.06em;}
+  .reset-btn:hover{background:var(--warm2);color:var(--ink);}
+  @keyframes popIn{from{opacity:0;transform:scale(0.9) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+  .day-off{background:var(--paper);border-radius:14px;border:1px solid var(--warm);padding:40px 24px;text-align:center;box-shadow:var(--shadow);}
+  .day-off .off-emoji{font-size:2.5rem;margin-bottom:12px;}
+  .day-off .off-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);margin-bottom:8px;}
+  .day-off .off-title em{font-style:italic;color:var(--accent);}
+  .day-off p{font-size:0.78rem;color:var(--muted);line-height:1.7;max-width:380px;margin:0 auto;}
+</style>
+</head>
+<body>
+<div class="sync-badge offline" id="syncBadge">offline</div>
+<div class="top-header">
+  <div class="greeting">Good morning, <em>Karen.</em></div>
+  <div class="sub">One checkbox at a time. Every tap syncs. 🙏</div>
+</div>
+<div class="day-selector" id="daySelector"></div>
+<div class="content">
+  <div class="progress-section">
+    <div class="progress-top">
+      <div class="progress-label">Today's Progress</div>
+      <div class="progress-count" id="progressCount">0 / 0</div>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+    <div class="encouragement" id="encouragement"></div>
+  </div>
+  <div id="dayContent"></div>
+</div>
+<script>
+const days = {
+  mon: { name: "Monday", sections: [
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
+      { time:"4:00am", title:"Wake up", note:"Feet on the floor. You're doing this." },
+      { time:"4:00–4:20am", title:"Shower, get dressed", note:"Everything laid out the night before." } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
+      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"Your anchor and the first domino of the day.", tag:"health" },
+      { time:"5:00–5:50am", title:"Finish getting ready — out the door by 5:50am", note:"Leave by 5:50am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
+      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. She skates 7–10am. Car ride = connection time." },
+      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"Arrive ~6:55am." } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"7:00am", items:[
+      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Get comfortable so you can focus." },
+      { time:"7:15–7:30am", title:"FB warmup — Kristen Carey account (15 min)", note:"Post 1 thing or comment on 3–5 posts, engage in a group, then switch back.", tag:"biz1" },
+      { time:"7:30–10:00am", title:"Deep Work — Krafted Charms / Shopify", note:"Highest-leverage build time. No ops, no messages.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"10:20am", items:[
+      { time:"10:20am", title:"Leave Starbucks → pick up Krystal 10:30am ✅", note:"She's done at 10am." },
+      { time:"10:30–11:00am", title:"Drive home with Krystal", note:"Connection time. Ask about HER. 😊" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
+      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"Walk 1 of 4. Non-negotiable. Do it before ops.", tag:"health" } ]},
+    { type:"ops", icon:"⚙️", label:"Laser Ops + Coaching", time:"11:30am", items:[
+      { time:"11:30am–1:00pm", title:"Laser Ops — Batch", note:"Engrave, pack, prep shipping. No reactive one-offs.", tag:"ops" },
+      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops and calls. ~30 min." },
+      { time:"1:00–2:00pm", title:"Wealthery Software Call — Trent (ATTEND LIVE)", note:"Mon 1pm CDT. Gut Reset offer outline + course description.", tag:"biz2" },
+      { time:"2:00–4:45pm", title:"Laser Ops continues — finish fulfillment", note:"Ship what's ready, then stop for the 5pm call.", tag:"ops" },
+      { time:"5:00–6:00pm", title:"Ecommerce Equation Coaching (Krafted)", note:"Mon 5pm CDT. Attend live with campaigns/offers to critique.", tag:"biz1" } ]},
+    { type:"family", icon:"❤️", label:"Family Evening", time:"6:30pm", items:[
+      { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Ken home. Non-negotiable.", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
+      { time:"7:30–8:00pm", title:"Kaiel intention time", note:"Monday is your best Kaiel window. One real exchange. Don't force it.", tag:"family" },
+      { time:"8:00–9:30pm", title:"Personal rest", note:"No laptop. No Etsy messages." } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
+      { time:"9:30pm", title:"Prep for tomorrow — clothes, bag", note:"Tuesday is your longest day." },
+      { time:"9:45pm", title:"Phones down", note:"Phone on charger across the room." },
+      { time:"10:00pm", title:"IN BED. Lights out.", note:"Your health depends on this. Well done today." } ]}
+  ]},
+  tue: { name:"Tuesday", sections:[
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
+      { time:"4:00am", title:"Wake up", note:"Longest day, biggest deep-work day. Start with intention." },
+      { time:"4:00–4:20am", title:"Shower, get dressed", note:"Prepped the night before." } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
+      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"You need this anchor most on Tuesdays.", tag:"health" },
+      { time:"5:00–5:50am", title:"Finish getting ready — out by 5:50am", note:"Leave by 5:50am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
+      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. Skates 7–10am, then STAYS at rink all day through HITS (5:15–8:15pm)." },
+      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"You're solo at Starbucks all day. Arrive ~6:50am." } ]},
+    { type:"deepwork", icon:"💻", label:"Solo Deep Work", time:"7:00am", items:[
+      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Don't skip this." },
+      { time:"7:00–10:00am", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"AI product creation, content, funnel copy. Sharpest morning window.", tag:"biz2" },
+      { time:"10:15am–1:00pm", title:"Deep Work — Krafted Charms / Shopify", note:"Krystal's still at the rink — keep building. Pages, offers, email, Meta.", tag:"biz1" } ]},
+    { type:"deepwork", icon:"💻", label:"Lunch + Block #2", time:"1:00pm", items:[
+      { time:"1:00–1:45pm", title:"Lunch — eat something real", note:"Fuel your body." },
+      { time:"1:45–4:30pm", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"Sales page / funnel build. Makes Tuesday your biggest Bloom day.", tag:"biz2" },
+      { time:"4:30–5:15pm", title:"Wrap + light admin / rest", note:"Save work. VA async or coaching recordings. Then breathe — late pickup." } ]},
+    { type:"drive", icon:"🚗", label:"Evening Pickup + Home", time:"8:30pm", items:[
+      { time:"8:30pm", title:"Pick up Krystal from HITS (ends 8:15pm)", note:"Head home together." },
+      { time:"8:30–9:00pm", title:"Drive home — arrive ~9pm", note:"Easy conversation, music she likes. 🎵" } ]},
+    { type:"family", icon:"❤️", label:"Late Connect", time:"9:00pm", items:[
+      { time:"~9:00pm", title:"Quick dinner / freshen up", note:"Reheat something simple. Keep it easy tonight.", tag:"family" },
+      { time:"9:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
+      { time:"9:30pm", title:"Prep for Wednesday — clothes, bag, notes", note:"Wednesday starts early again." },
+      { time:"10:00pm", title:"IN BED. Lights out.", note:"Tuesday complete. You showed up. 🙏" } ]}
+  ]},
+  wed: { name:"Wednesday", sections:[
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
+      { time:"4:00am", title:"Wake up", note:"Church drive and family devotional today." },
+      { time:"4:00–4:20am", title:"Shower, get dressed", note:"Smooth morning." } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
+      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"Mid-week reset. Ask for wisdom for the day ahead.", tag:"health" },
+      { time:"5:00–5:50am", title:"Finish getting ready — out by 5:50am", note:"Leave by 5:50am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
+      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. Skates 7–10am." },
+      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"Arrive ~6:55am." } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"7:00am", items:[
+      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Don't skip this." },
+      { time:"7:15–7:30am", title:"FB warmup — Kristen Carey account (15 min)", note:"Post or comment, engage in a group, switch back.", tag:"biz1" },
+      { time:"7:30–10:00am", title:"Deep Work — Krafted Charms / Shopify", note:"Implement Monday's coaching. Build momentum.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"10:20am", items:[
+      { time:"10:20am", title:"Leave Starbucks → pick up Krystal 10:30am ✅", note:"~25 min home." },
+      { time:"10:30–11:00am", title:"Drive home with Krystal", note:"Connection time in the car." } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
+      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"Walk 2 of 4. Fits before the 1pm church drive.", tag:"health" } ]},
+    { type:"ops", icon:"⚙️", label:"Ops + Church + Coaching", time:"11:30am", items:[
+      { time:"11:30am–1:00pm", title:"Laser Ops — Batch", note:"Engrave, pack, ship before the church drive.", tag:"ops" },
+      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops, the church drive, and your call. ~30 min." },
+      { time:"1:00–2:00pm", title:"Drive Kaiel + Krystal to church (and back)", note:"Home by 2pm. Ken picks them up 8:30–9pm.", tag:"family" },
+      { time:"2:00–3:00pm", title:"Ecommerce Equation Coaching (Krafted)", note:"Wed 2pm CDT. Attend live when you need critique.", tag:"biz1" },
+      { time:"3:00–4:00pm", title:"Implement one thing from the call", note:"Even a small tweak. Momentum compounds.", tag:"biz1" } ]},
+    { type:"family", icon:"❤️", label:"Family Evening + Devo", time:"6:30pm", items:[
+      { time:"6:30–7:00pm", title:"Dinner with family — phones off", note:"Ken home. Together time.", tag:"family" },
+      { time:"7:00–7:15pm", title:"Family devotional — whoever is home", note:"Short reading, prayer, one question. 🙏", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
+      { time:"8:00pm", title:"Family rest", note:"Ken leaves ~8:30pm for church pickup. You rest." } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
+      { time:"9:30pm", title:"Prep for Thursday", note:"Power day tomorrow. Set yourself up." },
+      { time:"10:00pm", title:"IN BED. Lights out.", note:"Wednesday done. Devotional ✅" } ]}
+  ]},
+  thu: { name:"Thursday", sections:[
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
+      { time:"4:00am", title:"Wake up", note:"Later drive today (drop 7:45am), still your power day. ⚡" },
+      { time:"4:00–4:20am", title:"Shower, get dressed", note:"" } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
+      { time:"4:20–5:00am", title:"Quiet time — devotion & prayer", note:"Ask for focus and clarity. Big day of strategic work.", tag:"health" },
+      { time:"5:00–7:00am", title:"Slow start at home — coffee, breakfast, prep", note:"No early drive. Leave at 7:10am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"7:10am", items:[
+      { time:"7:10am", title:"Leave home — drive Krystal to the rink", note:"Drop by 7:45am. Skates 8–10:30am." },
+      { time:"7:45am", title:"Drop Krystal ✅ — head to Starbucks", note:"Arrive ~7:50am." } ]},
+    { type:"deepwork", icon:"💻", label:"⭐ Power Day — Deep Work", time:"8:00am", items:[
+      { time:"8:00–10:30am", title:"Deep Work — Krafted Charms / Shopify", note:"Weekly strategy: what's working, what needs fixing. Offers, ad briefs, Shopify.", tag:"biz1" },
+      { time:"10:45am", title:"Drive back to rink — pick up Krystal", note:"She's done at 10:30am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive Home", time:"10:45am", items:[
+      { time:"10:45–11:45am", title:"Drive home (45–60 min)", note:"Longer drive today. Connection time.", tag:"family" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"12:00pm", items:[
+      { time:"12:00–12:30pm", title:"TREADMILL — 20–30 min walk", note:"Walk 3 of 4. After the long drive, before ops.", tag:"health" } ]},
+    { type:"ops", icon:"⚙️", label:"Ops + Coaching", time:"12:30pm", items:[
+      { time:"12:30–1:45pm", title:"Laser Ops — Batch #2 (main fulfillment)", note:"Engrave, pack, ship. Stop for the 2pm call.", tag:"ops" },
+      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops and the 2pm call. ~30 min." },
+      { time:"2:00–3:00pm", title:"Syndicate Q&A — Travis / team (Bloom)", note:"Thu 2pm CDT. Attend live when Gut Reset is ready for critique.", tag:"biz2" },
+      { time:"3:00–4:30pm", title:"Laser Ops continues", note:"Finish, then close the shop. Evening is family time.", tag:"ops" } ]},
+    { type:"family", icon:"❤️", label:"Family Evening", time:"6:30pm", items:[
+      { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Ken home. Real rest.", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
+      { time:"7:00–8:00pm", title:"Wealthery Monthly Themed Call — OPTIONAL (monthly)", note:"Some Thursdays only. Attend live only if the topic is directly relevant. Otherwise rest.", tag:"biz2" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
+      { time:"9:30pm", title:"Prep for Friday — VA 1:1 notes ready", note:"No early drive tomorrow 🎉" },
+      { time:"10:00pm", title:"IN BED. Lights out.", note:"Power day complete. Both businesses moved. 🙏" } ]}
+  ]},
+  fri: { name:"Friday", sections:[
+    { type:"health", icon:"🏃", label:"Treadmill + Quiet Time", time:"6:00am", items:[
+      { time:"6:00–6:45am", title:"TREADMILL — 30 min walk", note:"Walk 4 of 4. No drive today — your one early-morning walk.", tag:"health" },
+      { time:"6:45–8:00am", title:"Shower, quiet time, coffee, breakfast", note:"Slower morning. You earned it after four early drives." } ]},
+    { type:"admin", icon:"📋", label:"VA Meetings — Batched", time:"8:30am", items:[
+      { time:"8:30–9:00am", title:"Weekly Team Huddle — 30 min", note:"Priorities, blockers, progress. End on time.", tag:"ops" },
+      { time:"9:00–9:30am", title:"VA 1:1 — Ethel (30 min)", note:"Priorities, blockers, accountabilities for next week.", tag:"ops" },
+      { time:"9:30–10:00am", title:"VA 1:1 — Ian (30 min)", note:"Design review: assets, feedback, next deliverables.", tag:"ops" },
+      { time:"10:00–11:00am", title:"Send all async follow-up tasks", note:"Queue everything Ethel + Ian need, then switch to deep work.", tag:"ops" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work", time:"11:00am", items:[
+      { time:"11:00am–1:45pm", title:"Deep Work — Krafted Charms / Shopify (home)", note:"Offers, email, ad creative, Shopify. Prep for the 2pm call.", tag:"biz1" },
+      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best. ~30 min." } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 1 Coaching", time:"2:00pm", items:[
+      { time:"2:00–3:00pm", title:"Ecommerce Equation Coaching (Krafted)", note:"Fri 2pm CDT. Best call of the week for ad/offer critique — easiest to attend live.", tag:"biz1" },
+      { time:"3:00–5:00pm", title:"Implement feedback from the call", note:"Do it now while it's fresh. One change today = faster results.", tag:"biz1" } ]},
+    { type:"family", icon:"❤️", label:"Family Weekend Begins", time:"6:30pm", items:[
+      { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Weekend starts. Celebrate the week.", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
+      { time:"7:30pm+", title:"Family night — game, movie, or just together", note:"The reconnection you're building toward. 💛", tag:"family" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
+      { time:"9:30pm", title:"No screens — wind down", note:"No work. Weekend is for recharging." },
+      { time:"10:00–10:30pm", title:"IN BED.", note:"Five days done. You showed up every day. 🙏" } ]}
+  ]},
+  sat: { name:"Saturday", sections:[
+    { type:"drive", icon:"🚗", label:"Early Drop", time:"6:15am", items:[
+      { time:"6:15am", title:"Leave home — drive Krystal to the rink", note:"Drop 6:45am. Skates 7am–1:30pm; Ken picks up at 1:30. Drive straight home." },
+      { time:"~7:30am", title:"Arrive home ✅ — your Saturday is yours", note:"Ken handles the afternoon pickup." } ]},
+    { type:"health", icon:"🌿", label:"Health Morning", time:"8:00am", items:[
+      { time:"8:00am", title:"BP Check — log your reading", note:"Weekly blood pressure check. Track the trend.", tag:"health" },
+      { time:"8:00–9:00am", title:"Shower, breakfast, quiet time", note:"Slow morning. Treadmill is M/W/Th/F — Saturday is rest for your legs." } ]},
+    { type:"family", icon:"📖", label:"Dream Method Study", time:"9:00am", items:[
+      { time:"9:00–10:00am", title:"Dream Method — kid reconnection course", note:"One module/week. Scripts + videos for Kiana, Kaiel, Krystal. Protected.", tag:"family" } ]},
+    { type:"admin", icon:"📋", label:"Weekly Review", time:"12:00pm", items:[
+      { time:"12:00–12:45pm", title:"Weekly review — 45 min max", note:"What moved forward? #1 priority next week? Update VA task list.", tag:"ops" } ]},
+    { type:"family", icon:"❤️", label:"Family Afternoon", time:"1:30pm", items:[
+      { time:"~1:30pm", title:"Ken + Krystal home — family afternoon", note:"Put work away. Reconnect. Rest.", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
+      { time:"1st & 3rd Sat, 7pm", title:"Small group Bible study with Ken", note:"Protected couple time + community. Don't reschedule.", tag:"family" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:00pm", items:[
+      { time:"9:00pm", title:"Gentle Sunday prep", note:"Just a soft mental note of what matters next week." },
+      { time:"9:30pm", title:"IN BED — earlier if possible", note:"Sunday is full rest. Recharge completely." } ]}
+  ]},
+  sun: { name:"Sunday", isRestDay:true,
+    restMessage:"Sunday is your full rest day. No laser ops, no Shopify building, no guilt.",
+    restSub:"Church, family, devotional on 2nd & 4th Sundays, and genuine rest. You cannot pour from an empty cup. Today you refill it.",
+    sections:[
+      { type:"family", icon:"⛪", label:"Church + Family", time:"Morning", items:[
+        { time:"Morning", title:"Church — worship, community, connection", note:"", tag:"family" },
+        { time:"After church", title:"Lunch with friends or family", note:"Enjoy it fully." },
+        { time:"3:00–4:00pm", title:"Family devotional (2nd & 4th Sundays)", note:"Tell Kiana + Kaiel in advance. Even 20–30 min.", tag:"family" },
+        { time:"Afternoon", title:"Rest — nap, read, walk", note:"No screens, no work, no guilt.", tag:"health" },
+        { time:"Evening", title:"Dinner together — slow and present", note:"Ken cooks. You rest. This is the gift.", tag:"family" } ]},
+      { type:"admin", icon:"🎯", label:"Weekly Life Coach Review", time:"8:00pm", items:[
+        { time:"8:00–9:00pm", title:"Weekly Life Coach Review", note:"What moved forward? What did I avoid? What pattern repeated? The ONE thing next week needs.", tag:"ops" } ]},
+      { type:"shutdown", icon:"🌙", label:"Week Prep + Bed", time:"9:00pm", items:[
+        { time:"9:00pm", title:"Lay out clothes for Monday", note:"Your 4am self will thank you." },
+        { time:"9:15pm", title:"Set one intention for the week", note:"'This week I will move forward on ___.'" },
+        { time:"10:00pm", title:"IN BED. Week begins again in 6 hours.", note:"You rested. You refilled. You're ready. 🙏" } ]}
+    ]}
+};
+const encouragements = ["Great start! Keep going 💪","You're building momentum! ✨","Halfway there — amazing 🌟","More than halfway! Keep checking! 🎯","Almost there — finish strong! 🔥","SO close! One more! 💛","🎉 DAY COMPLETE! You showed up today.","Every check is a win.","You're doing better than you think. 🙏"];
+const dayOrder = ['mon','tue','wed','thu','fri','sat','sun'];
+const dayLabels = {mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
+
+// ---- STATE ----
+let state = JSON.parse(localStorage.getItem('karen_checklist') || '{}');
+
+// ---- AUTO WEEKLY RESET ----
+// Root-cause fix: item keys (e.g. "mon_1_0") are scoped to day-of-week, not to a
+// specific date. Without this, a box checked last Monday still shows checked
+// THIS Monday, so you never re-tap it and nothing new syncs to the sheet.
+// This block runs once per page load: if the stored "week" doesn't match the
+// current ISO week (Mon–Sun), it wipes state automatically. No button needed.
+function getMonday(d) {
+  d = new Date(d);
+  const day = d.getDay(); // 0=Sun..6=Sat
+  const diff = (day === 0 ? -6 : 1) - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0,0,0,0);
+  return d;
+}
+function weekKey(d) {
+  const m = getMonday(d);
+  return m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0')+'-'+String(m.getDate()).padStart(2,'0');
+}
+// Real trigger: clearing now happens when you check off "Weekly Life Coach
+// Review" (see toggleItem below) — whatever day that actually happens on.
+// This is just a 10-day safety net in case a week gets skipped entirely,
+// so stale checkmarks don't pile up forever.
+(function safetyNetReset(){
+  const last = localStorage.getItem('karen_checklist_last_reset');
+  const now = new Date();
+  if (!last) {
+    localStorage.setItem('karen_checklist_last_reset', now.toISOString());
+    return;
+  }
+  const daysSince = (now - new Date(last)) / 86400000;
+  if (daysSince > 10) {
+    state = {};
+    localStorage.setItem('karen_checklist', JSON.stringify(state));
+    localStorage.setItem('karen_checklist_last_reset', now.toISOString());
+  }
+})();
+
+let currentDay = null;
+const EXEC_URL='https://script.google.com/macros/s/AKfycbzzhdMzBzSZEu4-vqnRSpLk3-jTjOKW08G-FrHPCgoYw-PX6LT8BsKc8xlV59uj6i9b/exec';
+function hasSync(){ return true; }
+function setBadge(cls, text){ const b=document.getElementById('syncBadge'); if(!b) return; b.className='sync-badge '+cls; b.textContent=text; }
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function getTodayKey(){ const d=new Date().getDay(); const map=[6,0,1,2,3,4,5]; return dayOrder[map[d]]; }
+function getAllItems(dayKey){ const day=days[dayKey]; if(!day) return []; const items=[]; day.sections.forEach((sec,si)=>{ sec.items.forEach((item,ii)=>{ items.push(`${dayKey}_${si}_${ii}`); }); }); return items; }
+function getProgress(dayKey){ const all=getAllItems(dayKey); const done=all.filter(k=>state[k]).length; return {done,total:all.length}; }
+function renderDaySelector(){ const sel=document.getElementById('daySelector'); sel.innerHTML=''; dayOrder.forEach(key=>{ const {done,total}=getProgress(key); const btn=document.createElement('button'); btn.className='day-btn'+(key===currentDay?' active':''); btn.innerHTML=`<span class="day-name">${dayLabels[key]}</span><span class="day-progress">${done}/${total}</span>`; btn.onclick=()=>switchDay(key); sel.appendChild(btn); }); }
+function renderProgress(dayKey){ const {done,total}=getProgress(dayKey); document.getElementById('progressCount').textContent=`${done} / ${total}`; const pct=total>0?(done/total)*100:0; document.getElementById('progressBar').style.width=pct+'%'; let msg=''; if(done===0) msg="Ready when you are. Start with the first checkbox. 🌅"; else if(done===total&&total>0) msg="🎉 DAY COMPLETE! You showed up for yourself today."; else { const idx=Math.floor((done/total)*(encouragements.length-2)); msg=encouragements[idx]||encouragements[0]; } document.getElementById('encouragement').textContent=msg; }
+function renderDay(dayKey){ const day=days[dayKey]; const container=document.getElementById('dayContent'); container.innerHTML='';
+  if(day.isRestDay){ const card=document.createElement('div'); card.className='day-off'; card.innerHTML=`<div class="off-emoji">🌿</div><div class="off-title">Sunday — <em>Full Rest.</em></div><p>${day.restMessage}<br><br>${day.restSub}</p>`; container.appendChild(card); }
+  day.sections.forEach((sec,si)=>{ const group=document.createElement('div'); group.className='section-group'; const titleEl=document.createElement('div'); titleEl.className=`section-title s-${sec.type}`; titleEl.innerHTML=`<div class="s-icon">${sec.icon}</div><div class="s-label">${sec.label}</div><div class="s-time">${sec.time}</div>`; group.appendChild(titleEl); const checklist=document.createElement('div'); checklist.className='checklist';
+    sec.items.forEach((item,ii)=>{ const key=`${dayKey}_${si}_${ii}`; const isDone=!!state[key]; const el=document.createElement('div'); el.className='check-item'+(isDone?' done':''); el.setAttribute('data-key',key); let tagHtml=''; if(item.tag){ const tagLabels={biz1:'Krafted Charms',biz2:'Bloom Catalyst',health:'Health',family:'Family',ops:'Ops'}; tagHtml=`<span class="check-tag tag-${item.tag}">${tagLabels[item.tag]||item.tag}</span>`; } el.innerHTML=`<div class="checkbox"><span class="checkbox-check">✓</span></div><div class="check-content"><span class="check-time">${item.time}</span><div class="check-title">${tagHtml}${item.title}</div>${item.note?`<div class="check-note">${item.note}</div>`:''}</div>`; el.onclick=()=>toggleItem(key,el,dayKey); checklist.appendChild(el); });
+    group.appendChild(checklist); container.appendChild(group); });
+  const {done,total}=getProgress(dayKey); const cel=document.createElement('div'); cel.className='celebration'+(done===total&&total>0?' show':''); cel.id='celebration'; cel.innerHTML=`<div class="cel-emoji">🎉</div><div class="cel-title">Day Complete, Karen!</div><div class="cel-note">Every checkbox today was a choice to show up — for your health, your businesses, and your family. Rest well tonight. 🙏</div>`; container.appendChild(cel);
+  const resetBtn=document.createElement('button'); resetBtn.className='reset-btn'; resetBtn.textContent="Reset today's checklist"; resetBtn.onclick=()=>resetDay(dayKey); container.appendChild(resetBtn); }
+function toggleItem(key,el,dayKey){ state[key]=!state[key]; el.classList.toggle('done',state[key]); localStorage.setItem('karen_checklist',JSON.stringify(state)); renderProgress(dayKey); renderDaySelector(); const {done,total}=getProgress(dayKey); const cel=document.getElementById('celebration'); if(cel) cel.classList.toggle('show',done===total&&total>0); syncCheck(key,dayKey,state[key]);
+  if (state[key]) {
+    const parts = key.split('_');
+    const si = +parts[1], ii = +parts[2];
+    const item = days[dayKey].sections[si].items[ii];
+    if (item.title === "Weekly Life Coach Review") {
+      state = {};
+      localStorage.setItem('karen_checklist', JSON.stringify(state));
+      localStorage.setItem('karen_checklist_last_reset', new Date().toISOString());
+      renderDay(dayKey); renderProgress(dayKey); renderDaySelector();
+    }
+  }
+}
+function syncCheck(key,dayKey,checked){ try{ const parts=key.split('_'); const si=+parts[1], ii=+parts[2]; const sec=days[dayKey].sections[si]; const item=sec.items[ii]; setBadge('saving','saving…'); fetch(EXEC_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({ date:todayStr(), day:days[dayKey].name, itemKey:key, title:item.title, checked:checked, tag:item.tag||'' })}).then(()=>setBadge('saved','synced ✓')).catch(()=>setBadge('error','sync failed')); }catch(e){ setBadge('error','sync failed'); } }
+function resetDay(dayKey){ getAllItems(dayKey).forEach(k=>delete state[k]); localStorage.setItem('karen_checklist',JSON.stringify(state)); renderDay(dayKey); renderProgress(dayKey); renderDaySelector(); }
+function switchDay(dayKey){ currentDay=dayKey; renderDaySelector(); renderDay(dayKey); renderProgress(dayKey); }
+currentDay=getTodayKey();
+renderDaySelector(); renderDay(currentDay); renderProgress(currentDay);
+setBadge('saved','sync ready');
+</script>
+</body>
+</html>
