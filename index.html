@@ -119,204 +119,218 @@
 <script>
 const days = {
   mon: { name: "Monday", sections: [
-    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
-      { time:"4:00am", title:"Wake up", note:"Feet on the floor. You're doing this." },
-      { time:"4:00–4:20am", title:"Shower, get dressed", note:"Everything laid out the night before." } ]},
-    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
-      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"Your anchor and the first domino of the day.", tag:"health" },
-      { time:"5:00–5:50am", title:"Finish getting ready — out the door by 5:50am", note:"Leave by 5:50am." } ]},
-    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
-      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. She skates 7–10am. Car ride = connection time." },
-      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"Arrive ~6:55am." } ]},
-    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"7:00am", items:[
-      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Get comfortable so you can focus." },
-      { time:"7:15–7:30am", title:"FB warmup — Karen Catangay account (15 min)", note:"Post 1 thing or comment on 3–5 posts, engage in a group, then switch back.", tag:"biz1" },
-      { time:"7:30–9:00am", title:"Deep Work — Krafted Charms / Shopify", note:"Highest-leverage build time. No ops, no messages. Shortened this week — last hour goes to Mariah's Challenge.", tag:"biz1" },
-      { time:"9:00–10:00am", title:"Mariah's AI Challenge — daily lesson + homework", note:"Self-paced, new lesson drops 9am. Jul13–Aug7 only.", tag:"biz1" } ]},
-    { type:"ops", icon:"📱", label:"Krafted Charms — Daily Post", time:"10:30am", items:[
-      { time:"10:30am (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
-    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"10:20am", items:[
-      { time:"10:20am", title:"Leave Starbucks → pick up Krystal 10:30am ✅", note:"She's done at 10am." },
-      { time:"10:30–11:00am", title:"Drive home with Krystal", note:"Connection time. Ask about HER. 😊" } ]},
-    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
-      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"Walk 1 of 4. Non-negotiable. Do it before ops.", tag:"health" } ]},
-    { type:"ops", icon:"⚙️", label:"Laser Ops + Coaching", time:"11:30am", items:[
-      { time:"11:30am–1:00pm", title:"Laser Ops — Batch", note:"Engrave, pack, prep shipping. No reactive one-offs.", tag:"ops" },
-      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops and calls. ~30 min." },
-      { time:"1:00–2:00pm", title:"Wealthery Software Call — Trent (ATTEND LIVE)", note:"Mon 1pm CDT. Gut Reset offer outline + course description.", tag:"biz2" },
-      { time:"2:00–4:45pm", title:"Laser Ops continues — finish fulfillment", note:"Ship what's ready, then stop for the 5pm call.", tag:"ops" },
-      { time:"5:00–7:00pm", title:"Idea To Launch Bootcamp — live call", note:"Mon 5-7pm CDT, Jul13-Aug3. Replaces the 5pm Ecommerce Equation call this bootcamp — catch that one Tuesday 7pm instead.", tag:"biz1" } ]},
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"5:00am", items:[
+      { time:"5:00am", title:"Wake up", note:"No 4am start needed Mondays — CC drop isn't until 8am." },
+      { time:"5:00–5:20am", title:"Shower, get dressed", note:"" } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"5:20am", items:[
+      { time:"5:20–6:00am", title:"Quiet time — devotion, prayer, James Method", note:"Your anchor and the first domino of the day.", tag:"health" },
+      { time:"6:00–8:00am", title:"Get Krystal ready for CC — squeeze in early work if there's time", note:"No breakfast block needed. Leave the house at 8:00am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"8:00am", items:[
+      { time:"8:00am", title:"Leave home — drive Krystal to Classical Conversations", note:"Drop by 8:15am at the latest." },
+      { time:"8:15am", title:"Drop Krystal at CC ✅ — head to Starbucks", note:"~5 min to Starbucks. Arrive 8:20am." } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"8:20am", items:[
+      { time:"8:20am–1:00pm", title:"Deep Work — Krafted Charms / Shopify", note:"Highest-leverage build time.", tag:"biz1" },
+      { time:"1:00–2:00pm", title:"Coaching: Wealthery Software Call — Trent (ATTEND LIVE)", note:"Gut Reset offer outline + course description.", tag:"biz2" },
+      { time:"2:00–3:15pm", title:"Deep Work continues — Krafted Charms / Shopify", note:"Back to it after the call.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"3:15pm", items:[
+      { time:"3:15pm", title:"Leave Starbucks → pick up Krystal from CC", note:"~5 min drive." },
+      { time:"3:20pm", title:"Arrive at CC — pick up Krystal ✅", note:"" },
+      { time:"3:20–3:45pm", title:"Drive home with Krystal", note:"Connection time. Ask about HER. 😊" } ]},
+    { type:"family", icon:"📚", label:"Krystal Homeschool Check-In", time:"3:45pm", items:[
+      { time:"3:45pm", title:"Homeschool check-in with Krystal", note:"How was CC today? Any work to review.", tag:"family" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"4:15pm", items:[
+      { time:"4:15–4:45pm", title:"TREADMILL — 20–30 min walk", note:"Correct slot. Non-negotiable.", tag:"health" } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 1 Coaching", time:"5:00pm", items:[
+      { time:"5:00–6:00pm", title:"Ecommerce Equation Coaching (Krafted Charms)", note:"Attend live.", tag:"biz1" } ]},
     { type:"family", icon:"❤️", label:"Family Evening", time:"6:30pm", items:[
-      { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Ken home. Non-negotiable.", tag:"family" },
+      { time:"6:30–7:00pm", title:"Dinner with family — phones off", note:"Ken home. Non-negotiable.", tag:"family" },
       { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
-      { time:"7:30–8:00pm", title:"Kaiel intention time", note:"Monday is your best Kaiel window. One real exchange. Don't force it.", tag:"family" },
-      { time:"8:00–9:30pm", title:"Personal rest", note:"No laptop. No Etsy messages." } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
-      { time:"9:30pm", title:"Prep for tomorrow — clothes, bag", note:"Tuesday is your longest day." },
-      { time:"9:45pm", title:"Phones down", note:"Phone on charger across the room." },
+      { time:"7:00–7:30pm", title:"Kaiel intention time", note:"Monday is your best Kaiel window. One real exchange.", tag:"family" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Reflect on today — what moved, what didn't." },
       { time:"10:00pm", title:"IN BED. Lights out.", note:"Your health depends on this. Well done today." } ]}
   ]},
   tue: { name:"Tuesday", sections:[
     { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
-      { time:"4:00am", title:"Wake up", note:"Longest day, biggest deep-work day. Start with intention." },
+      { time:"4:00am", title:"Wake up", note:"Double-rink day. Earliest drive of the week." },
       { time:"4:00–4:20am", title:"Shower, get dressed", note:"Prepped the night before." } ]},
     { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
-      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"You need this anchor most on Tuesdays.", tag:"health" },
-      { time:"5:00–5:50am", title:"Finish getting ready — out by 5:50am", note:"Leave by 5:50am." } ]},
-    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
-      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. Skates 7–10am, then STAYS at rink all day through HITS (5:15–8:15pm)." },
-      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"You're solo at Starbucks all day. Arrive ~6:50am." } ]},
-    { type:"deepwork", icon:"💻", label:"Solo Deep Work", time:"7:00am", items:[
-      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Don't skip this." },
-      { time:"7:00–9:00am", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"AI product creation, content, funnel copy. Shortened this week — last hour goes to Mariah's Challenge.", tag:"biz2" },
-      { time:"9:00–10:00am", title:"Mariah's AI Challenge — daily lesson + homework", note:"Self-paced, new lesson drops 9am. Jul13–Aug7 only.", tag:"biz1" },
-      { time:"10:15am–1:00pm", title:"Deep Work — Krafted Charms / Shopify", note:"Krystal's still at the rink — keep building. Pages, offers, email, Meta.", tag:"biz1" } ]},
-    { type:"ops", icon:"📱", label:"Krafted Charms — Daily Post", time:"1:00pm", items:[
-      { time:"1:00pm (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
-    { type:"deepwork", icon:"💻", label:"Lunch + Block #2", time:"1:00pm", items:[
-      { time:"1:00–1:45pm", title:"Lunch — eat something real", note:"Fuel your body." },
-      { time:"1:45–4:30pm", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"Sales page / funnel build. Makes Tuesday your biggest Bloom day.", tag:"biz2" },
-      { time:"4:30–5:15pm", title:"Wrap + light admin / rest", note:"Save work. VA async or coaching recordings. Then breathe — late pickup." } ]},
-    { type:"coaching", icon:"🔥", label:"Ecommerce Equation — Catch-Up", time:"7:00pm", items:[
-      { time:"7:00–8:00pm", title:"Ecommerce Equation Coaching (Krafted) — Tuesday catch-up", note:"Jul14, 21, 28, Aug4 only — replaces the Monday call skipped for bootcamp.", tag:"biz1" } ]},
-    { type:"drive", icon:"🚗", label:"Evening Pickup + Home", time:"8:30pm", items:[
-      { time:"8:30pm", title:"Pick up Krystal from HITS (ends 8:15pm)", note:"Head home together." },
-      { time:"8:30–9:00pm", title:"Drive home — arrive ~9pm", note:"Easy conversation, music she likes. 🎵" } ]},
-    { type:"family", icon:"❤️", label:"Late Connect", time:"9:00pm", items:[
-      { time:"~9:00pm", title:"Quick dinner / freshen up", note:"Reheat something simple. Keep it easy tonight.", tag:"family" },
-      { time:"9:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
-      { time:"9:30pm", title:"Prep for Wednesday — clothes, bag, notes", note:"Wednesday starts early again." },
+      { time:"4:20–4:50am", title:"Quiet time — devotion, prayer, James Method", note:"Shorter today — early rink drop.", tag:"health" },
+      { time:"4:50–5:00am", title:"Finish getting ready — out by 5:00am", note:"Leave by 5:00am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:00am", items:[
+      { time:"5:00am", title:"Leave home — drive Krystal to the rink", note:"Morning skate." },
+      { time:"~5:45am", title:"Drop Krystal ✅ — head to Starbucks", note:"You're solo at Starbucks until the 8am pickup." } ]},
+    { type:"deepwork", icon:"💻", label:"Solo Deep Work", time:"6:00am", items:[
+      { time:"6:00–8:00am", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"AI product creation, content, funnel copy.", tag:"biz2" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Back to Starbucks", time:"8:00am", items:[
+      { time:"8:00am", title:"Drive — pick up Krystal from rink, back to Starbucks", note:"Morning skate done." } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work + Krystal School", time:"8:20am", items:[
+      { time:"8:20am–4:00pm", title:"Deep Work — Krafted Charms (Krystal does schoolwork alongside you)", note:"Your biggest single block of the week.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Evening Rink Drop", time:"4:00pm", items:[
+      { time:"4:00pm", title:"Drive — take Krystal back to rink for evening skate", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Bloom Catalyst", time:"4:30pm", items:[
+      { time:"4:30–6:00pm", title:"Deep Work — Bloom Catalyst (Gut Reset)", note:"Sales page / funnel build.", tag:"biz2" } ]},
+    { type:"drive", icon:"🚗", label:"Evening Pickup + Home", time:"6:20pm", items:[
+      { time:"6:20pm", title:"Drive — pick up Krystal from rink → home", note:"Long day. Almost there." } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 1 Coaching — Optional", time:"7:00pm", items:[
+      { time:"7:00–8:00pm", title:"Ecommerce Equation — Optional Consult Call (LIFTOFF)", note:"Optional — this overlaps carnivore check-in, skip if the day ran long.", tag:"biz1" } ]},
+    { type:"family", icon:"❤️", label:"Family Evening (Late)", time:"7:30pm", items:[
+      { time:"7:30–8:15pm", title:"Dinner with family — phones off", note:"Tuesday is the late one — double-rink day.", tag:"family" },
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Reflect on today." },
       { time:"10:00pm", title:"IN BED. Lights out.", note:"Tuesday complete. You showed up. 🙏" } ]}
   ]},
   wed: { name:"Wednesday", sections:[
     { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
-      { time:"4:00am", title:"Wake up", note:"Church drive and family devotional today." },
+      { time:"4:00am", title:"Wake up", note:"Latin workshop + church drive today." },
       { time:"4:00–4:20am", title:"Shower, get dressed", note:"Smooth morning." } ]},
     { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
-      { time:"4:20–5:00am", title:"Quiet time — devotion, prayer, James Method", note:"Mid-week reset. Ask for wisdom for the day ahead.", tag:"health" },
-      { time:"5:00–5:50am", title:"Finish getting ready — out by 5:50am", note:"Leave by 5:50am." } ]},
-    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:50am", items:[
-      { time:"5:50am", title:"Leave home — drive Krystal to Memorial rink", note:"Drop 6:45am. Skates 7–10am." },
-      { time:"6:45am", title:"Drop Krystal ✅ — ~7 min to Starbucks", note:"Arrive ~6:55am." } ]},
-    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"7:00am", items:[
-      { time:"7:00–7:15am", title:"Settle in — bathroom, drink, set up", note:"Don't skip this." },
-      { time:"7:15–7:30am", title:"FB warmup — Karen Catangay account (15 min)", note:"Post or comment, engage in a group, switch back.", tag:"biz1" },
-      { time:"7:30–9:00am", title:"Deep Work — Krafted Charms / Shopify", note:"Implement Monday's coaching. Shortened this week — last hour goes to Mariah's Challenge.", tag:"biz1" },
-      { time:"9:00–10:00am", title:"Mariah's AI Challenge — daily lesson + homework", note:"Self-paced, new lesson drops 9am. Jul13–Aug7 only.", tag:"biz1" } ]},
-    { type:"ops", icon:"📱", label:"Krafted Charms — Daily Post", time:"10:30am", items:[
-      { time:"10:30am (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
-    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"10:20am", items:[
-      { time:"10:20am", title:"Leave Starbucks → pick up Krystal 10:30am ✅", note:"~25 min home." },
-      { time:"10:30–11:00am", title:"Drive home with Krystal", note:"Connection time in the car." } ]},
-    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
-      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"Walk 2 of 4. Fits before the 1pm church drive.", tag:"health" } ]},
-    { type:"ops", icon:"⚙️", label:"Ops + Church + Coaching", time:"11:30am", items:[
-      { time:"11:30am–1:00pm", title:"Laser Ops — Batch", note:"Engrave, pack, ship before the church drive.", tag:"ops" },
-      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops, the church drive, and your call. ~30 min." },
-      { time:"1:00–2:00pm", title:"Drive Kaiel + Krystal to church (and back)", note:"Home by 2pm. Ken picks them up 8:30–9pm.", tag:"family" },
-      { time:"2:00–3:00pm", title:"Ecommerce Equation Coaching (Krafted)", note:"Wed 2pm CDT. Attend live — fit whatever you need to implement from the call into this same hour.", tag:"biz1" },
-      { time:"3:00–4:00pm", title:"Idea To Launch Bootcamp — live call", note:"Jul15, 22, 29, Aug5 — replaces the old 'implement one thing' block.", tag:"biz1" } ]},
+      { time:"4:20–4:50am", title:"Quiet time — devotion, prayer, James Method", note:"Mid-week reset. Ask for wisdom for the day ahead.", tag:"health" },
+      { time:"4:50–5:00am", title:"Finish getting ready — out by 5:00am", note:"Leave by 5:00am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:00am", items:[
+      { time:"5:00am", title:"Leave home — drive Krystal to the rink", note:"Morning skate." },
+      { time:"~5:45am", title:"Drop Krystal ✅ — head to Starbucks", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"6:00am", items:[
+      { time:"6:00–7:20am", title:"Deep Work — Krafted Charms / Shopify", note:"Implement Monday's coaching.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"7:30am", items:[
+      { time:"7:30am", title:"Pick up Krystal from rink → home", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Home", time:"8:30am", items:[
+      { time:"8:30–9:20am", title:"Deep Work — Krafted Charms / Shopify", note:"Short block before the Latin drive.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Drop at Latin Workshop", time:"9:30am", items:[
+      { time:"9:30am", title:"Drive Krystal to Latin Workshop (Walker's)", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Krystal's Latin Workshop", time:"10:00am", items:[
+      { time:"10:00–11:00am", title:"Krystal's Latin Workshop — you work at Hando Cafe", note:"Use this hour for Krafted Charms while she's in class.", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up from Latin", time:"11:00am", items:[
+      { time:"11:00am", title:"Drive Krystal home from Latin", note:"" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"11:45am", items:[
+      { time:"11:45am–12:15pm", title:"TREADMILL — 20–30 min walk", note:"Fits before ops.", tag:"health" } ]},
+    { type:"ops", icon:"⚙️", label:"Laser Ops", time:"12:15pm", items:[
+      { time:"12:15–1:00pm", title:"Laser Ops — Batch", note:"Engrave, pack, ship.", tag:"ops" } ]},
+    { type:"family", icon:"📚", label:"Krystal Homeschool Check-In", time:"1:00pm", items:[
+      { time:"1:00pm", title:"Homeschool check-in with Krystal", note:"", tag:"family" } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 2 Coaching", time:"2:00pm", items:[
+      { time:"2:00–3:00pm", title:"Coaching: Wealthery Weekly (Bloom Catalyst)", note:"", tag:"biz2" } ]},
+    { type:"drive", icon:"🚗", label:"Church Drive", time:"4:00pm", items:[
+      { time:"4:00pm", title:"Drive Krystal to Grace Church", note:"~30 min drive. Kaiel comes separately now, straight from his own school.", tag:"family" },
+      { time:"4:30pm", title:"Drop Krystal at Grace ✅ — drive home", note:"" },
+      { time:"4:30–5:00pm", title:"Drive home", note:"Cutting it close for the 5pm call — call in from the car if you're still driving." } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 1 Coaching", time:"5:00pm", items:[
+      { time:"5:00–6:00pm", title:"Coaching: Ecommerce Equation — Velocity Q&A (LIFTOFF)", note:"", tag:"biz1" } ]},
     { type:"family", icon:"❤️", label:"Family Evening + Devo", time:"6:30pm", items:[
       { time:"6:30–7:00pm", title:"Dinner with family — phones off", note:"Ken home. Together time.", tag:"family" },
-      { time:"7:00–7:15pm", title:"Family devotional — whoever is home", note:"Short reading, prayer, one question. 🙏", tag:"family" },
       { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
-      { time:"8:00pm", title:"Family rest", note:"Ken leaves ~8:30pm for church pickup. You rest." } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
-      { time:"9:30pm", title:"Prep for Thursday", note:"Power day tomorrow. Set yourself up." },
+      { time:"7:00–7:30pm", title:"Family devotional — whoever is home", note:"Short reading, prayer, one question. 🙏", tag:"family" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Reflect on today." },
       { time:"10:00pm", title:"IN BED. Lights out.", note:"Wednesday done. Devotional ✅" } ]}
   ]},
   thu: { name:"Thursday", sections:[
     { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
-      { time:"4:00am", title:"Wake up", note:"Later drive today (drop 7:45am), still your power day. ⚡" },
+      { time:"4:00am", title:"Wake up", note:"Early rink drop, then your power day. ⚡" },
       { time:"4:00–4:20am", title:"Shower, get dressed", note:"" } ]},
     { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
-      { time:"4:20–5:00am", title:"Quiet time — devotion & prayer", note:"Ask for focus and clarity. Big day of strategic work.", tag:"health" },
-      { time:"5:00–7:00am", title:"Slow start at home — coffee, breakfast, prep", note:"No early drive. Leave at 7:10am." } ]},
-    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"7:10am", items:[
-      { time:"7:10am", title:"Leave home — drive Krystal to the rink", note:"Drop by 7:45am. Skates 8–10:30am." },
-      { time:"7:45am", title:"Drop Krystal ✅ — head to Starbucks", note:"Arrive ~7:50am." } ]},
-    { type:"deepwork", icon:"💻", label:"⭐ Power Day — Deep Work", time:"8:00am", items:[
-      { time:"8:00–9:00am", title:"Deep Work — Krafted Charms / Shopify", note:"Weekly strategy: what's working, what needs fixing. Shortened this week — last hour+ goes to Mariah's Challenge.", tag:"biz1" },
-      { time:"9:00–10:00am", title:"Mariah's AI Challenge — daily lesson + homework", note:"Self-paced, new lesson drops 9am. Jul13–Aug7 only.", tag:"biz1" },
-      { time:"10:45am", title:"Drive back to rink — pick up Krystal", note:"She's done at 10:30am." },
-      { time:"10:30am (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
-    { type:"drive", icon:"🚗", label:"Drive Home", time:"10:45am", items:[
-      { time:"10:45–11:45am", title:"Drive home (45–60 min)", note:"Longer drive today. Connection time.", tag:"family" } ]},
-    { type:"health", icon:"🏃", label:"Treadmill", time:"12:00pm", items:[
-      { time:"12:00–12:30pm", title:"TREADMILL — 20–30 min walk", note:"Walk 3 of 4. After the long drive, before ops.", tag:"health" } ]},
-    { type:"ops", icon:"⚙️", label:"Ops + Coaching", time:"12:30pm", items:[
-      { time:"12:30–1:45pm", title:"Laser Ops — Batch #2 (main fulfillment)", note:"Engrave, pack, ship. Stop for the 2pm call.", tag:"ops" },
-      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best around ops and the 2pm call. ~30 min." },
-      { time:"2:00–3:00pm", title:"Syndicate Q&A — Travis / team (Bloom)", note:"Thu 2pm CDT. Attend live when Gut Reset is ready for critique.", tag:"biz2" },
-      { time:"3:00–4:30pm", title:"Laser Ops continues", note:"Finish, then close the shop. Evening is family time.", tag:"ops" } ]},
+      { time:"4:20–4:50am", title:"Quiet time — devotion & prayer", note:"Ask for focus and clarity.", tag:"health" },
+      { time:"4:50–5:00am", title:"Finish getting ready — out by 5:00am", note:"Leave by 5:00am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:00am", items:[
+      { time:"5:00am", title:"Leave home — drive Krystal to the rink", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"6:00am", items:[
+      { time:"6:00–7:20am", title:"Deep Work — Krafted Charms / Shopify", note:"", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"7:30am", items:[
+      { time:"7:30am", title:"Pick up Krystal from rink → home", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"⭐ Power Block — Deep Work", time:"8:30am", items:[
+      { time:"8:30–11:00am", title:"Deep Work — Krafted Charms / Shopify (home)", note:"Weekly strategy: what's working, what needs fixing.", tag:"biz1" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
+      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"", tag:"health" } ]},
+    { type:"ops", icon:"⚙️", label:"Laser Ops — Batch #2", time:"11:30am", items:[
+      { time:"11:30am–1:45pm", title:"Laser Ops — Batch #2", note:"Main fulfillment. Stop for the 2pm call.", tag:"ops" } ]},
+    { type:"coaching", icon:"🔥", label:"Biz 2 Coaching", time:"2:00pm", items:[
+      { time:"2:00–3:00pm", title:"Syndicate Q&A — Travis / team (Bloom Catalyst)", note:"Attend live when Gut Reset is ready for critique.", tag:"biz2" } ]},
+    { type:"ops", icon:"⚙️", label:"Laser Ops continues", time:"3:00pm", items:[
+      { time:"3:00–4:30pm", title:"Laser Ops — Batch #2 (cont.)", note:"Finish, then close the shop.", tag:"ops" } ]},
     { type:"family", icon:"❤️", label:"Family Evening", time:"6:30pm", items:[
       { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Ken home. Real rest.", tag:"family" },
       { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
-      { time:"7:00–8:00pm", title:"Wealthery Monthly Themed Call — OPTIONAL (monthly)", note:"Some Thursdays only. Attend live only if the topic is directly relevant. Otherwise rest.", tag:"biz2" } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
-      { time:"9:30pm", title:"Prep for Friday — VA 1:1 notes ready", note:"No early drive tomorrow 🎉" },
+      { time:"7:00–7:30pm", title:"Kiana intention + course time", note:"Thursday is your Kiana window. One real exchange.", tag:"family" },
+      { time:"7:00–8:00pm", title:"Ecommerce Equation — Optional Consult Call (LIFTOFF)", note:"Optional — overlaps dinner/Kiana time, skip if the day ran long.", tag:"biz1" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Reflect on today." },
       { time:"10:00pm", title:"IN BED. Lights out.", note:"Power day complete. Both businesses moved. 🙏" } ]}
   ]},
   fri: { name:"Friday", sections:[
-    { type:"health", icon:"🏃", label:"Treadmill + Quiet Time", time:"6:00am", items:[
-      { time:"6:00–6:45am", title:"TREADMILL — 30 min walk", note:"Walk 4 of 4. No drive today — your one early-morning walk.", tag:"health" },
-      { time:"6:45–8:00am", title:"Shower, quiet time, coffee, breakfast", note:"Slower morning. You earned it after four early drives." } ]},
-    { type:"admin", icon:"📋", label:"VA Meetings — Batched", time:"8:30am", items:[
-      { time:"8:30–9:00am", title:"Weekly Team Huddle — 30 min", note:"Priorities, blockers, progress. End on time.", tag:"ops" },
-      { time:"9:00–9:30am", title:"VA 1:1 — Ethel (30 min)", note:"Priorities, blockers, accountabilities for next week.", tag:"ops" },
-      { time:"9:30–10:00am", title:"VA 1:1 — Ian (30 min)", note:"Design review: assets, feedback, next deliverables.", tag:"ops" },
-      { time:"10:00–11:00am", title:"Send all async follow-up tasks", note:"Queue everything Ethel + Ian need, then switch to deep work.", tag:"ops" } ]},
-    { type:"deepwork", icon:"💻", label:"Deep Work", time:"11:00am", items:[
-      { time:"11:00am–1:45pm", title:"Deep Work — Krafted Charms / Shopify (home)", note:"Offers, email, ad creative, Shopify. Prep for the 2pm call.", tag:"biz1" },
-      { time:"flexible · 30 min", title:"Lunch / snack break", note:"Your one flexible break — lunch or a snack, whenever fits best. ~30 min." },
-      { time:"1:00pm (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
+    { type:"sleep", icon:"🌙", label:"Wake Up", time:"4:00am", items:[
+      { time:"4:00am", title:"Wake up", note:"Team day." },
+      { time:"4:00–4:20am", title:"Shower, get dressed", note:"" } ]},
+    { type:"health", icon:"🌿", label:"Quiet Time", time:"4:20am", items:[
+      { time:"4:20–4:50am", title:"Quiet time — devotion, prayer, James Method", note:"", tag:"health" },
+      { time:"4:50–5:00am", title:"Finish getting ready — out by 5:00am", note:"Leave by 5:00am." } ]},
+    { type:"drive", icon:"🚗", label:"Drive + Drop Krystal", time:"5:00am", items:[
+      { time:"5:00am", title:"Leave home — drive Krystal to the rink", note:"" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Starbucks", time:"6:00am", items:[
+      { time:"6:00–7:20am", title:"Deep Work — Krafted Charms / Shopify", note:"", tag:"biz1" } ]},
+    { type:"drive", icon:"🚗", label:"Pick Up + Home", time:"7:30am", items:[
+      { time:"7:30am", title:"Pick up Krystal from rink → home", note:"" },
+      { time:"7:30–9:00am", title:"Breakfast, settle in at home with Krystal", note:"Slower stretch before VA meetings." } ]},
+    { type:"admin", icon:"📋", label:"VA Meetings — Batched", time:"9:00am", items:[
+      { time:"9:00–9:30am", title:"Weekly Team Huddle — 30 min", note:"Priorities, blockers, progress. End on time.", tag:"ops" },
+      { time:"9:30–10:00am", title:"VA 1:1 — Ethel (30 min)", note:"Priorities, blockers, accountabilities for next week.", tag:"ops" },
+      { time:"10:00–10:30am", title:"VA 1:1 — Ian (30 min)", note:"Design review: assets, feedback, next deliverables.", tag:"ops" } ]},
+    { type:"health", icon:"🏃", label:"Treadmill", time:"11:00am", items:[
+      { time:"11:00–11:30am", title:"TREADMILL — 20–30 min walk", note:"", tag:"health" } ]},
+    { type:"deepwork", icon:"💻", label:"Deep Work — Home", time:"11:30am", items:[
+      { time:"11:30am–1:00pm", title:"Deep Work — Krafted Charms / Shopify (home)", note:"Offers, email, ad creative, Shopify. Prep for the 2pm call.", tag:"biz1" } ]},
+    { type:"family", icon:"📚", label:"Krystal Homeschool Check-In", time:"1:00pm", items:[
+      { time:"1:00pm", title:"Homeschool check-in with Krystal", note:"", tag:"family" } ]},
     { type:"coaching", icon:"🔥", label:"Biz 1 Coaching", time:"2:00pm", items:[
-      { time:"2:00–3:00pm", title:"Ecommerce Equation Coaching (Krafted)", note:"Fri 2pm CDT. Best call of the week for ad/offer critique — easiest to attend live.", tag:"biz1" },
-      { time:"3:00–5:00pm", title:"Implement feedback from the call", note:"Do it now while it's fresh. One change today = faster results.", tag:"biz1" } ]},
+      { time:"2:00–3:00pm", title:"Ecommerce Equation Coaching (Krafted Charms)", note:"Best call of the week for ad/offer critique.", tag:"biz1" } ]},
+    { type:"deepwork", icon:"💻", label:"Implement Coaching Feedback", time:"3:00pm", items:[
+      { time:"3:00–5:00pm", title:"Implement feedback from the call (Krafted Charms)", note:"Do it now while it's fresh.", tag:"biz1" } ]},
     { type:"family", icon:"❤️", label:"Family Weekend Begins", time:"6:30pm", items:[
       { time:"6:30–7:30pm", title:"Dinner with family — phones off", note:"Weekend starts. Celebrate the week.", tag:"family" },
       { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
       { time:"7:30pm+", title:"Family night — game, movie, or just together", note:"The reconnection you're building toward. 💛", tag:"family" } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:30pm", items:[
-      { time:"9:30pm", title:"No screens — wind down", note:"No work. Weekend is for recharging." },
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Reflect on the week." },
       { time:"10:00–10:30pm", title:"IN BED.", note:"Five days done. You showed up every day. 🙏" } ]}
   ]},
   sat: { name:"Saturday", sections:[
     { type:"drive", icon:"🚗", label:"Early Drop", time:"6:15am", items:[
-      { time:"6:15am", title:"Leave home — drive Krystal to the rink", note:"Drop 6:45am. Skates 7am–1:30pm; Ken picks up at 1:30. Drive straight home." },
-      { time:"~7:30am", title:"Arrive home ✅ — your Saturday is yours", note:"Ken handles the afternoon pickup." } ]},
+      { time:"6:15am", title:"Leave home — drive Krystal to the rink", note:"Drop 6:45am. Ken handles the afternoon pickup." },
+      { time:"~7:30am", title:"Arrive home ✅ — your Saturday is yours", note:"" } ]},
     { type:"health", icon:"🌿", label:"Health Morning", time:"8:00am", items:[
       { time:"8:00am", title:"BP Check — log your reading", note:"Weekly blood pressure check. Track the trend.", tag:"health" },
-      { time:"8:00–9:00am", title:"Shower, breakfast, quiet time", note:"Slow morning. Treadmill is M/W/Th/F — Saturday is rest for your legs." },
-      { time:"9:00am (or when it fits)", title:"Post to FB + IG — kraftedcharmsshop", note:"Daily until advertising is live. Even one photo + caption counts.", tag:"biz1" } ]},
+      { time:"8:00–9:00am", title:"Shower, breakfast, quiet time", note:"Treadmill is M/W/Th/F — Saturday is rest for your legs." } ]},
     { type:"family", icon:"📖", label:"Dream Method Study", time:"9:00am", items:[
-      { time:"9:00–10:00am", title:"Dream Method — kid reconnection course", note:"One module/week. Scripts + videos for Kiana, Kaiel, Krystal. Protected.", tag:"family" } ]},
+      { time:"9:00–10:00am", title:"Dream Method — kid reconnection course", note:"One module/week. Scripts + videos for Kiana, Kaiel, Krystal.", tag:"family" } ]},
     { type:"admin", icon:"📋", label:"Weekly Review", time:"12:00pm", items:[
       { time:"12:00–12:45pm", title:"Weekly review — 45 min max", note:"What moved forward? #1 priority next week? Update VA task list.", tag:"ops" } ]},
     { type:"family", icon:"❤️", label:"Family Afternoon", time:"1:30pm", items:[
       { time:"~1:30pm", title:"Ken + Krystal home — family afternoon", note:"Put work away. Reconnect. Rest.", tag:"family" },
-      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
-      { time:"1st & 3rd Sat, 7pm", title:"Small group Bible study with Ken", note:"Protected couple time + community. Don't reschedule.", tag:"family" } ]},
-    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:00pm", items:[
-      { time:"9:00pm", title:"Gentle Sunday prep", note:"Just a soft mental note of what matters next week." },
-      { time:"9:30pm", title:"IN BED — earlier if possible", note:"Sunday is full rest. Recharge completely." } ]}
+      { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" } ]},
+    { type:"coaching", icon:"❤️", label:"Small Group Bible Study", time:"7:00pm", items:[
+      { time:"7:00–9:00pm", title:"Small Group Bible Study — Ken + Karen", note:"Protected couple time + community. Don't reschedule.", tag:"family" } ]},
+    { type:"shutdown", icon:"🌙", label:"Wind Down", time:"9:45pm", items:[
+      { time:"9:45pm", title:"Daily check-in", note:"Soft mental note of what matters next week." },
+      { time:"10:00pm", title:"IN BED — earlier if possible", note:"Sunday is full rest. Recharge completely." } ]}
   ]},
   sun: { name:"Sunday", isRestDay:true,
     restMessage:"Sunday is your full rest day. No laser ops, no Shopify building, no guilt.",
-    restSub:"Church, family, devotional on 2nd & 4th Sundays, and genuine rest. You cannot pour from an empty cup. Today you refill it.",
+    restSub:"Weekly Life Coach Review happens first thing, then church, family, and genuine rest. You cannot pour from an empty cup. Today you refill it.",
     sections:[
+      { type:"admin", icon:"🎯", label:"Weekly Life Coach Review", time:"8:00am", items:[
+        { time:"8:00–9:00am", title:"Weekly Life Coach Review", note:"What moved forward? What did I avoid? What pattern repeated? The ONE thing next week needs.", tag:"ops" },
+        { time:"9:00am", title:"Message Claude: \"run my weekly review\"", note:"Trigger this once the review above is done.", tag:"ops" } ]},
       { type:"family", icon:"⛪", label:"Church + Family", time:"Morning", items:[
-        { time:"Morning", title:"Church — worship, community, connection", note:"", tag:"family" },
+        { time:"Morning", title:"Church — worship, community, connection", note:"" },
         { time:"After church", title:"Lunch with friends or family", note:"Enjoy it fully." },
         { time:"3:00–4:00pm", title:"Family devotional (2nd & 4th Sundays)", note:"Tell Kiana + Kaiel in advance. Even 20–30 min.", tag:"family" },
         { time:"Afternoon", title:"Rest — nap, read, walk", note:"No screens, no work, no guilt.", tag:"health" },
+        { time:"7:00pm", title:"Krystal carnivore check-in", note:"On carnivore today? Y/N + note any slip.", tag:"health" },
         { time:"Evening", title:"Dinner together — slow and present", note:"Ken cooks. You rest. This is the gift.", tag:"family" } ]},
-      { type:"admin", icon:"🎯", label:"Weekly Life Coach Review", time:"8:00pm", items:[
-        { time:"8:00–9:00pm", title:"Weekly Life Coach Review", note:"What moved forward? What did I avoid? What pattern repeated? The ONE thing next week needs.", tag:"ops" } ]},
       { type:"shutdown", icon:"🌙", label:"Week Prep + Bed", time:"9:00pm", items:[
         { time:"9:00pm", title:"Lay out clothes for Monday", note:"Your 4am self will thank you." },
         { time:"9:15pm", title:"Set one intention for the week", note:"'This week I will move forward on ___.'" },
+        { time:"9:45pm", title:"Daily check-in", note:"Reflect on the day." },
         { time:"10:00pm", title:"IN BED. Week begins again in 6 hours.", note:"You rested. You refilled. You're ready. 🙏" } ]}
     ]}
 };
